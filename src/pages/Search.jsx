@@ -117,7 +117,7 @@ export default function Search() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-blush-50">
       <HelplineBar />
 
       <div className="max-w-6xl mx-auto px-4 py-6">
@@ -131,7 +131,7 @@ export default function Search() {
             placeholder="Search by name, type, location..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-olive-500"
           />
         </div>
 
@@ -142,7 +142,7 @@ export default function Search() {
             {(filters.regions.length > 0 || filters.types.length > 0 || filters.modalities.length > 0 || filters.costTypes.length > 0 || filters.languages.length > 0) && (
               <button
                 onClick={clearFilters}
-                className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                className="text-olive-700 hover:text-olive-900 text-sm font-medium"
               >
                 Clear all
               </button>
@@ -154,12 +154,12 @@ export default function Search() {
             <h3 className="font-medium text-gray-900 mb-3">Region</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {REGIONS.map(region => (
-                <label key={region.value} className="flex items-center cursor-pointer">
+                <label key={region.value} className="flex cursor-pointer items-center rounded-md px-2 py-1 transition-colors hover:bg-blush-50">
                   <input
                     type="checkbox"
                     checked={filters.regions.includes(region.value)}
                     onChange={() => toggleFilter('regions', region.value)}
-                    className="rounded border-gray-300 text-blue-600"
+                    className="rounded border-gray-300 text-olive-700"
                   />
                   <span className="ml-2 text-sm text-gray-700">{region.label}</span>
                 </label>
@@ -172,12 +172,12 @@ export default function Search() {
             <h3 className="font-medium text-gray-900 mb-3">Service Type</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {TYPES.map(type => (
-                <label key={type.value} className="flex items-center cursor-pointer">
+                <label key={type.value} className="flex cursor-pointer items-center rounded-md px-2 py-1 transition-colors hover:bg-blush-50">
                   <input
                     type="checkbox"
                     checked={filters.types.includes(type.value)}
                     onChange={() => toggleFilter('types', type.value)}
-                    className="rounded border-gray-300 text-blue-600"
+                    className="rounded border-gray-300 text-olive-700"
                   />
                   <span className="ml-2 text-sm text-gray-700">{type.label}</span>
                 </label>
@@ -190,12 +190,12 @@ export default function Search() {
             <h3 className="font-medium text-gray-900 mb-3">Cost</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {COST_TYPES.map(cost => (
-                <label key={cost.value} className="flex items-center cursor-pointer">
+                <label key={cost.value} className="flex cursor-pointer items-center rounded-md px-2 py-1 transition-colors hover:bg-blush-50">
                   <input
                     type="checkbox"
                     checked={filters.costTypes.includes(cost.value)}
                     onChange={() => toggleFilter('costTypes', cost.value)}
-                    className="rounded border-gray-300 text-blue-600"
+                    className="rounded border-gray-300 text-olive-700"
                   />
                   <span className="ml-2 text-sm text-gray-700">{cost.label}</span>
                 </label>
@@ -208,12 +208,12 @@ export default function Search() {
             <h3 className="font-medium text-gray-900 mb-3">Support Method</h3>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {MODALITIES.map(mod => (
-                <label key={mod.value} className="flex items-center cursor-pointer">
+                <label key={mod.value} className="flex cursor-pointer items-center rounded-md px-2 py-1 transition-colors hover:bg-blush-50">
                   <input
                     type="checkbox"
                     checked={filters.modalities.includes(mod.value)}
                     onChange={() => toggleFilter('modalities', mod.value)}
-                    className="rounded border-gray-300 text-blue-600"
+                    className="rounded border-gray-300 text-olive-700"
                   />
                   <span className="ml-2 text-sm text-gray-700">{mod.label}</span>
                 </label>
@@ -226,12 +226,12 @@ export default function Search() {
             <h3 className="font-medium text-gray-900 mb-3">Language</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {LANGUAGES.map(lang => (
-                <label key={lang.value} className="flex items-center cursor-pointer">
+                <label key={lang.value} className="flex cursor-pointer items-center rounded-md px-2 py-1 transition-colors hover:bg-blush-50">
                   <input
                     type="checkbox"
                     checked={filters.languages.includes(lang.value)}
                     onChange={() => toggleFilter('languages', lang.value)}
-                    className="rounded border-gray-300 text-blue-600"
+                    className="rounded border-gray-300 text-olive-700"
                   />
                   <span className="ml-2 text-sm text-gray-700">{lang.label}</span>
                 </label>
@@ -249,8 +249,8 @@ export default function Search() {
           </div>
 
           {filteredOrgs.length === 0 ? (
-            <div className="bg-yellow-50 border border-yellow-200 p-6 rounded-lg text-center">
-              <p className="text-yellow-800">No services match your filters. Try adjusting your search.</p>
+            <div className="rounded-lg border border-blush-200 bg-blush-100 p-6 text-center">
+              <p className="text-blush-900">No services match your filters. Try adjusting your search.</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -261,8 +261,8 @@ export default function Search() {
           )}
         </div>
 
-        <div className="mt-12 p-4 bg-blue-50 border border-blue-200 rounded">
-          <p className="text-sm text-blue-800">
+        <div className="mt-12 rounded border border-blush-200 bg-blush-100 p-4">
+          <p className="text-sm text-olive-900">
             <span className="font-semibold">Tip:</span> All listed services are verified. If you can't find what you need, contact your local health authority for recommendations.
           </p>
         </div>

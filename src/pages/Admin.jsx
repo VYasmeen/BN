@@ -21,6 +21,8 @@ export default function Admin() {
   })
 
   useEffect(() => {
+    if (!supabase) return
+
     checkUser()
   }, [])
 
@@ -97,34 +99,40 @@ export default function Admin() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-blush-50">
         <HelplineBar />
         <div className="max-w-2xl mx-auto py-12 px-4">
           <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
 
           <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h2 className="text-lg font-semibold mb-4">Login Required</h2>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 disabled:opacity-50 transition"
-              >
-                {loading ? 'Sending...' : 'Send Magic Link'}
-              </button>
-              {message && <p className="text-sm text-gray-700 bg-blue-50 p-2 rounded">{message}</p>}
-            </form>
+            {supabase ? (
+              <>
+                <h2 className="text-lg font-semibold mb-4">Login Required</h2>
+                <form onSubmit={handleLogin} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input
+                      type="email"
+                      placeholder="your@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-olive-500"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full rounded bg-olive-700 py-2 font-semibold text-white transition hover:bg-olive-800 disabled:opacity-50"
+                  >
+                    {loading ? 'Sending...' : 'Send Magic Link'}
+                  </button>
+                  {message && <p className="rounded bg-blush-100 p-2 text-sm text-gray-700">{message}</p>}
+                </form>
+              </>
+            ) : (
+              <p className="text-gray-600">Admin sign-in requires Supabase configuration.</p>
+            )}
           </div>
         </div>
       </div>
@@ -132,7 +140,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-blush-50">
       <HelplineBar />
 
       <div className="max-w-6xl mx-auto px-4 py-6">
@@ -143,7 +151,7 @@ export default function Admin() {
           </div>
           <button
             onClick={handleLogout}
-            className="bg-red-600 text-white py-2 px-4 rounded font-semibold hover:bg-red-700 transition"
+            className="rounded bg-rose-700 px-4 py-2 font-semibold text-white transition hover:bg-rose-800"
           >
             Logout
           </button>
@@ -158,7 +166,7 @@ export default function Admin() {
                 onClick={() => setTab(t)}
                 className={`px-4 py-3 font-medium border-b-2 transition ${
                   tab === t
-                    ? 'border-blue-600 text-blue-600'
+                    ? 'border-olive-700 text-olive-800'
                     : 'border-transparent text-gray-700 hover:text-gray-900'
                 }`}
               >
@@ -178,18 +186,18 @@ export default function Admin() {
               <p className="text-gray-600 text-sm font-medium">Total Organisations</p>
               <p className="text-4xl font-bold text-gray-900 mt-2">{stats.total}</p>
             </div>
-            <div className="bg-green-50 p-6 rounded-lg shadow">
-              <p className="text-green-700 text-sm font-medium">Verified</p>
-              <p className="text-4xl font-bold text-green-900 mt-2">{stats.verified}</p>
-              <p className="text-xs text-green-700 mt-2">{Math.round((stats.verified / stats.total) * 100)}% verified</p>
+            <div className="rounded-lg bg-olive-50 p-6 shadow">
+              <p className="text-sm font-medium text-olive-800">Verified</p>
+              <p className="mt-2 text-4xl font-bold text-olive-900">{stats.verified}</p>
+              <p className="mt-2 text-xs text-olive-800">{Math.round((stats.verified / stats.total) * 100)}% verified</p>
             </div>
-            <div className="bg-blue-50 p-6 rounded-lg shadow">
-              <p className="text-blue-700 text-sm font-medium">Regions</p>
-              <p className="text-4xl font-bold text-blue-900 mt-2">7</p>
+            <div className="rounded-lg bg-blush-100 p-6 shadow">
+              <p className="text-sm font-medium text-olive-800">Regions</p>
+              <p className="mt-2 text-4xl font-bold text-olive-900">7</p>
             </div>
-            <div className="bg-indigo-50 p-6 rounded-lg shadow">
-              <p className="text-indigo-700 text-sm font-medium">Languages</p>
-              <p className="text-4xl font-bold text-indigo-900 mt-2">15+</p>
+            <div className="rounded-lg bg-blush-50 p-6 shadow">
+              <p className="text-sm font-medium text-blush-800">Languages</p>
+              <p className="mt-2 text-4xl font-bold text-blush-900">15+</p>
             </div>
           </div>
         )}
@@ -218,11 +226,11 @@ export default function Admin() {
                       <td className="px-6 py-4 text-gray-700 capitalize">{org.cost_type.replace('_', ' ')}</td>
                       <td className="px-6 py-4">
                         {org.verified ? (
-                          <span className="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded">
+                          <span className="inline-block rounded bg-olive-100 px-3 py-1 text-xs font-semibold text-olive-800">
                             ✓ Verified
                           </span>
                         ) : (
-                          <span className="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded">
+                          <span className="inline-block rounded bg-blush-100 px-3 py-1 text-xs font-semibold text-blush-900">
                             ⚠ Unverified
                           </span>
                         )}
@@ -230,7 +238,7 @@ export default function Admin() {
                       <td className="px-6 py-4">
                         <button
                           onClick={() => handleVerifyOrg(org.id)}
-                          className="text-blue-600 hover:text-blue-800 font-medium text-sm"
+                          className="text-sm font-medium text-olive-700 hover:text-olive-900"
                         >
                           {org.verified ? 'Unverify' : 'Verify'}
                         </button>
@@ -254,7 +262,7 @@ export default function Admin() {
                   type="text"
                   value={newOrg.name}
                   onChange={(e) => setNewOrg({ ...newOrg, name: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-olive-500"
                   placeholder="Organization name"
                   required
                 />
@@ -326,7 +334,7 @@ export default function Admin() {
                 <textarea
                   value={newOrg.short_desc}
                   onChange={(e) => setNewOrg({ ...newOrg, short_desc: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-olive-500"
                   placeholder="Brief description"
                   rows="3"
                 />
@@ -346,7 +354,7 @@ export default function Admin() {
               <div className="flex gap-3 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition"
+                  className="flex-1 rounded bg-olive-700 py-2 font-semibold text-white transition hover:bg-olive-800"
                 >
                   Add Organisation
                 </button>
@@ -361,7 +369,7 @@ export default function Admin() {
                     short_desc: '',
                     website_url: ''
                   })}
-                  className="bg-gray-300 text-gray-900 py-2 px-6 rounded font-semibold hover:bg-gray-400 transition"
+                  className="rounded bg-blush-200 px-6 py-2 font-semibold text-gray-900 transition hover:bg-blush-300"
                 >
                   Clear
                 </button>
@@ -372,9 +380,9 @@ export default function Admin() {
 
         {/* Verification Tab */}
         {tab === 'verification' && (
-          <div className="bg-blue-50 p-8 rounded-lg border border-blue-200">
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">Verification Management</h2>
-            <p className="text-blue-800 mb-6">
+          <div className="rounded-lg border border-blush-200 bg-blush-100 p-8">
+            <h2 className="mb-4 text-2xl font-bold text-olive-900">Verification Management</h2>
+            <p className="mb-6 text-olive-900">
               All organisations are verified by our community. Click on an organisation above to manage its verification status.
             </p>
             <div className="bg-white p-6 rounded-lg">

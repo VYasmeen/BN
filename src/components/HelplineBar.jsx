@@ -11,6 +11,8 @@ export default function HelplineBar() {
   }, [])
 
   const fetchHelplines = async () => {
+    if (!supabase) return
+
     try {
       const { data, error } = await supabase
         .from('helplines_critical')
@@ -29,11 +31,12 @@ export default function HelplineBar() {
   }
 
   return (
-    <div className="sticky top-0 z-50 bg-red-600 text-white shadow-lg">
+    <div className="sticky top-0 z-50 bg-rose-700 text-white shadow-lg">
       <div className="max-w-4xl mx-auto px-4 py-3">
         <button
           onClick={() => setExpanded(!expanded)}
-          className="w-full text-left font-bold text-lg flex justify-between items-center hover:bg-red-700 px-2 py-1 rounded transition"
+          aria-expanded={expanded}
+          className="flex w-full items-center justify-between rounded px-2 py-1 text-left text-lg font-bold transition hover:bg-rose-800"
         >
           <span>🚨 In crisis? Call now</span>
           <span>{expanded ? '▼' : '▶'}</span>
@@ -42,7 +45,7 @@ export default function HelplineBar() {
         {expanded && (
           <div className="mt-3 space-y-2 pb-2">
             {helplines.map((h) => (
-              <div key={h.id || h.name} className="bg-red-700 p-3 rounded">
+              <div key={h.id || h.name} className="rounded bg-rose-800 p-3">
                 <p className="font-semibold">{h.name}</p>
                 <p className="text-lg">
                   <a href={`tel:${h.phone}`} className="underline hover:opacity-80">
@@ -59,7 +62,7 @@ export default function HelplineBar() {
         )}
 
         <p className="mt-2 text-sm italic opacity-90">
-          Bloom NOW is a directory, not therapy. If you're in crisis, please reach out.
+          You don't have to figure it out alone. Bloom NOW can help you find the right support, one step at a time.
         </p>
       </div>
     </div>

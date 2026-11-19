@@ -18,6 +18,11 @@ export default function UserProfile() {
   })
 
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+
     checkUser()
   }, [])
 
@@ -77,23 +82,27 @@ export default function UserProfile() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-blush-50">
         <HelplineBar />
         <div className="max-w-2xl mx-auto px-4 py-12">
           <div className="bg-white p-8 rounded-lg shadow text-center">
             <h2 className="text-2xl font-bold mb-4">Create Your Profile</h2>
             <p className="text-gray-600 mb-6">Sign in to save bookmarks, preferences, and access personalized recommendations.</p>
-            <button
-              onClick={() => {
-                const email = window.prompt('Enter your email:')
-                if (email) {
-                  supabase.auth.signInWithOtp({ email })
-                }
-              }}
-              className="bg-blue-600 text-white px-6 py-3 rounded font-medium hover:bg-blue-700"
-            >
-              Sign In with Email
-            </button>
+            {supabase ? (
+              <button
+                onClick={() => {
+                  const email = window.prompt('Enter your email:')
+                  if (email) {
+                    supabase.auth.signInWithOtp({ email })
+                  }
+                }}
+                className="rounded bg-olive-700 px-6 py-3 font-medium text-white hover:bg-olive-800"
+              >
+                Sign In with Email
+              </button>
+            ) : (
+              <p className="text-sm text-gray-500">Sign-in requires Supabase configuration. You can still browse the directory.</p>
+            )}
           </div>
         </div>
       </div>
@@ -101,7 +110,7 @@ export default function UserProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-blush-50">
       <HelplineBar />
 
       <div className="max-w-4xl mx-auto px-4 py-6">
@@ -114,7 +123,7 @@ export default function UserProfile() {
             </div>
             <button
               onClick={handleLogout}
-              className="text-red-600 hover:text-red-800 font-medium"
+              className="font-medium text-rose-700 hover:text-rose-900"
             >
               Sign Out
             </button>
@@ -142,7 +151,7 @@ export default function UserProfile() {
               </div>
               <button
                 onClick={() => setEditing(true)}
-                className="bg-blue-600 text-white px-6 py-2 rounded font-medium hover:bg-blue-700"
+                className="rounded bg-olive-700 px-6 py-2 font-medium text-white hover:bg-olive-800"
               >
                 Edit Profile
               </button>
@@ -198,14 +207,14 @@ export default function UserProfile() {
                 <button
                   type="button"
                   onClick={handleSaveProfile}
-                  className="bg-blue-600 text-white px-6 py-2 rounded font-medium hover:bg-blue-700"
+                  className="rounded bg-olive-700 px-6 py-2 font-medium text-white hover:bg-olive-800"
                 >
                   Save
                 </button>
                 <button
                   type="button"
                   onClick={() => setEditing(false)}
-                  className="bg-gray-300 text-gray-900 px-6 py-2 rounded font-medium hover:bg-gray-400"
+                  className="rounded bg-blush-200 px-6 py-2 font-medium text-gray-900 hover:bg-blush-300"
                 >
                   Cancel
                 </button>
@@ -221,7 +230,7 @@ export default function UserProfile() {
           {bookmarks.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
               <p>No bookmarks yet. Start saving your favorite services!</p>
-              <a href="/search" className="text-blue-600 hover:underline font-medium mt-3 inline-block">
+              <a href="/search" className="mt-3 inline-block font-medium text-olive-700 hover:text-olive-900 hover:underline">
                 Browse Services →
               </a>
             </div>
@@ -234,9 +243,9 @@ export default function UserProfile() {
         </div>
 
         {/* Help & Support */}
-        <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
-          <h3 className="font-bold text-blue-900 mb-2">Need Help?</h3>
-          <p className="text-blue-800 text-sm">
+        <div className="mt-8 rounded-lg border border-blush-200 bg-blush-100 p-6">
+          <h3 className="mb-2 font-bold text-olive-900">Need Help?</h3>
+          <p className="text-sm text-olive-900">
             If you have questions about your profile or need support, <a href="/search" className="underline font-medium">find a support service</a> or contact us.
           </p>
         </div>

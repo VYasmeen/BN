@@ -22,13 +22,13 @@ export default function Directory() {
   }, [filters])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-blush-50">
       <HelplineBar />
 
       <div className="max-w-6xl mx-auto px-4 py-6">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Bloom NOW Directory</h1>
         <p className="text-gray-600 mb-6">
-          Browse our verified mental health services directory. For advanced search with multiple filters, visit our <a href="/search" className="text-blue-600 hover:underline">Search page</a>.
+          Browse our verified mental health services directory. For advanced search with multiple filters, visit our <a href="/search" className="font-medium text-olive-700 hover:text-olive-900 hover:underline">Search page</a>.
         </p>
 
         {/* Quick Filters */}
@@ -41,7 +41,7 @@ export default function Directory() {
               <select
                 value={filters.region}
                 onChange={(e) => setFilters({ ...filters, region: e.target.value })}
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-olive-500"
               >
                 <option value="worldwide">🌍 Worldwide</option>
                 <option value="africa">🌍 Africa</option>
@@ -59,7 +59,7 @@ export default function Directory() {
               <select
                 value={filters.type || ''}
                 onChange={(e) => setFilters({ ...filters, type: e.target.value || null })}
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-olive-500"
               >
                 <option value="">All Types</option>
                 <option value="therapist">👨‍⚕️ Therapist</option>
@@ -76,7 +76,7 @@ export default function Directory() {
               <select
                 value={filters.cost_type || ''}
                 onChange={(e) => setFilters({ ...filters, cost_type: e.target.value || null })}
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-olive-500"
               >
                 <option value="">All Costs</option>
                 <option value="free">🆓 Free</option>
@@ -94,7 +94,7 @@ export default function Directory() {
               <p>No organisations match your filters.</p>
               <button
                 onClick={() => setFilters({ region: 'worldwide', cost_type: null, type: null })}
-                className="text-blue-600 hover:underline font-medium mt-2"
+                className="mt-2 font-medium text-olive-700 hover:text-olive-900 hover:underline"
               >
                 Clear filters
               </button>
@@ -112,8 +112,8 @@ export default function Directory() {
         </div>
 
         {/* Disclaimer */}
-        <div className="mt-12 p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <p className="text-sm text-yellow-800">
+        <div className="mt-12 rounded-lg border border-blush-200 bg-blush-100 p-6">
+          <p className="text-sm text-blush-900">
             <span className="font-semibold">Disclaimer:</span> Bloom NOW is a directory of support options, not a medical provider. All services are verified by our community. If you're experiencing a mental health crisis, contact emergency services or a helpline immediately.
           </p>
         </div>

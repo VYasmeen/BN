@@ -25,7 +25,7 @@ export default function OrgCard({ org }) {
   const typeIcon = TYPE_ICONS[org.type] || '📌'
 
   return (
-    <div className="border border-gray-200 rounded-lg p-6 bg-white shadow-sm hover:shadow-lg transition">
+    <div className="rounded-xl border border-blush-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-olive-300 hover:shadow-lg">
       {/* Header */}
       <div className="flex justify-between items-start mb-3">
         <div className="flex-1">
@@ -37,7 +37,7 @@ export default function OrgCard({ org }) {
         </div>
         <div className="flex gap-2">
           {org.verified && (
-            <span className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded whitespace-nowrap">
+            <span className="whitespace-nowrap rounded bg-olive-100 px-2 py-1 text-xs font-semibold text-olive-800">
               ✓ Verified
             </span>
           )}
@@ -55,7 +55,7 @@ export default function OrgCard({ org }) {
       {/* Tags */}
       <div className="mb-4 flex flex-wrap gap-2">
         {/* Cost */}
-        <span className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
+        <span className="inline-block rounded-full bg-blush-100 px-3 py-1 text-xs font-medium text-blush-800">
           {org.cost_type === 'free' && '🆓 Free'}
           {org.cost_type === 'sliding_scale' && '💰 Sliding Scale'}
           {org.cost_type === 'paid' && org.cost_per_session && `💳 $${org.cost_per_session}/session`}
@@ -64,7 +64,7 @@ export default function OrgCard({ org }) {
 
         {/* Modalities */}
         {org.modalities && org.modalities.map(mod => (
-          <span key={mod} className="inline-block bg-indigo-100 text-indigo-800 text-xs font-medium px-3 py-1 rounded-full">
+          <span key={mod} className="inline-block rounded-full bg-blush-50 px-3 py-1 text-xs font-medium text-blush-800">
             {MODALITY_ICONS[mod] || '📌'} {mod.replace('_', ' ')}
           </span>
         ))}
@@ -113,7 +113,7 @@ export default function OrgCard({ org }) {
             href={org.website_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 text-center bg-blue-50 text-blue-600 py-2 px-4 rounded font-medium hover:bg-blue-100 transition border border-blue-200"
+            className="flex-1 rounded border border-olive-300 bg-olive-50 px-4 py-2 text-center font-medium text-olive-800 hover:bg-olive-100"
           >
             Visit Website
           </a>
@@ -121,7 +121,7 @@ export default function OrgCard({ org }) {
         {org.contacts && org.contacts[0] && org.contacts[0].type === 'phone' && (
           <a
             href={`tel:${org.contacts[0].value}`}
-            className="flex-1 text-center bg-blue-600 text-white py-2 px-4 rounded font-medium hover:bg-blue-700 transition"
+            className="flex-1 rounded bg-olive-700 px-4 py-2 text-center font-medium text-white hover:bg-olive-800"
           >
             Call Now
           </a>

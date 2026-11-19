@@ -21,12 +21,12 @@ export default function EducationHub() {
 
   if (selectedArticle) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-blush-50">
         <HelplineBar />
         <div className="max-w-4xl mx-auto px-4 py-6">
           <button
             onClick={() => setSelectedArticle(null)}
-            className="mb-6 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+            className="mb-6 flex items-center gap-2 font-medium text-olive-700 hover:text-olive-900"
           >
             ← Back to articles
           </button>
@@ -59,8 +59,8 @@ export default function EducationHub() {
               })}
             </div>
 
-            <div className="mt-12 p-6 bg-blue-50 border border-blue-200 rounded">
-              <p className="text-sm text-blue-800">
+            <div className="mt-12 rounded border border-blush-200 bg-blush-100 p-6">
+              <p className="text-sm text-olive-900">
                 <span className="font-semibold">Need professional help?</span> Find qualified therapists and support services in the <a href="/search" className="underline">directory</a>.
               </p>
             </div>
@@ -71,7 +71,7 @@ export default function EducationHub() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-blush-50">
       <HelplineBar />
 
       <div className="max-w-6xl mx-auto px-4 py-6">
@@ -86,8 +86,8 @@ export default function EducationHub() {
               onClick={() => setSelectedCategory(cat.value)}
               className={`px-4 py-2 rounded-full whitespace-nowrap font-medium transition ${
                 selectedCategory === cat.value
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-500'
+                  ? 'bg-olive-700 text-white shadow-sm'
+                  : 'border border-blush-200 bg-white text-gray-700 hover:border-olive-500 hover:bg-blush-50'
               }`}
             >
               {cat.label}
@@ -98,13 +98,14 @@ export default function EducationHub() {
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredContent.map(article => (
-            <div
+            <button
               key={article.id}
+              type="button"
               onClick={() => setSelectedArticle(article)}
-              className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition cursor-pointer border border-gray-200"
+              className="w-full cursor-pointer rounded-xl border border-blush-200 bg-white p-6 text-left shadow-sm transition duration-200 hover:-translate-y-1 hover:border-olive-300 hover:shadow-lg"
             >
               <div className="flex items-start justify-between mb-3">
-                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                <span className="inline-block rounded-full bg-blush-100 px-3 py-1 text-xs font-medium text-blush-800">
                   {CATEGORIES.find(c => c.value === article.category)?.label}
                 </span>
               </div>
@@ -112,9 +113,9 @@ export default function EducationHub() {
               <p className="text-gray-600 text-sm mb-4">{article.description}</p>
               <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                 <span className="text-xs text-gray-500">By {article.author || 'Bloom NOW'}</span>
-                <span className="text-blue-600 font-medium text-sm">Read more →</span>
+                <span className="text-sm font-medium text-olive-700">Read more →</span>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
@@ -125,10 +126,10 @@ export default function EducationHub() {
         )}
 
         {/* CTA */}
-        <div className="mt-12 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
+        <div className="mt-12 rounded-lg border border-blush-200 bg-gradient-to-r from-blush-100 to-blush-50 p-6">
           <h3 className="text-lg font-bold mb-2">Want to contribute?</h3>
           <p className="text-gray-700 mb-4">We're looking for mental health professionals and educators to contribute content.</p>
-          <button className="bg-blue-600 text-white px-6 py-2 rounded font-medium hover:bg-blue-700 transition">
+          <button className="rounded bg-olive-700 px-6 py-2 font-medium text-white hover:bg-olive-800">
             Contribute Content
           </button>
         </div>

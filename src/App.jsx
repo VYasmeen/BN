@@ -9,9 +9,11 @@ import Admin from './pages/Admin'
 function App() {
   const [page, setPage] = useState('search')
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(Boolean(supabase))
 
   useEffect(() => {
+    if (!supabase) return
+
     checkUser()
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user || null)
@@ -21,9 +23,14 @@ function App() {
   }, [])
 
   const checkUser = async () => {
-    const { data: { user } } = await supabase.auth.getUser()
-    setUser(user)
-    setLoading(false)
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    } catch (error) {
+      console.error('Error checking user:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (loading) {
@@ -37,31 +44,31 @@ function App() {
   return (
     <div>
       {/* Top Navigation */}
-      <nav className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-4 shadow-lg sticky top-0 z-40">
+      <nav className="sticky top-0 z-40 bg-gradient-to-r from-olive-900 to-olive-800 px-4 py-4 text-white shadow-lg">
         <div className="max-w-6xl mx-auto flex gap-6 items-center justify-between">
           <div className="flex gap-6 items-center">
             <button
               onClick={() => setPage('search')}
-              className={`font-semibold transition flex items-center gap-2 ${page === 'search' ? 'text-white' : 'text-blue-100 hover:text-white'}`}
+              className={`flex items-center gap-2 rounded-lg px-3 py-2 text-base font-bold text-white transition hover:bg-white/15 md:text-lg ${page === 'search' ? 'bg-white/20' : 'hover:text-white'}`}
             >
               🔍 Search
             </button>
             <button
               onClick={() => setPage('education')}
-              className={`font-semibold transition flex items-center gap-2 ${page === 'education' ? 'text-white' : 'text-blue-100 hover:text-white'}`}
+              className={`flex items-center gap-2 rounded-lg px-3 py-2 text-base font-bold text-white transition hover:bg-white/15 md:text-lg ${page === 'education' ? 'bg-white/20' : 'hover:text-white'}`}
             >
               📚 Learn
             </button>
             <button
               onClick={() => setPage('directory')}
-              className={`font-semibold transition flex items-center gap-2 ${page === 'directory' ? 'text-white' : 'text-blue-100 hover:text-white'}`}
+              className={`flex items-center gap-2 rounded-lg px-3 py-2 text-base font-bold text-white transition hover:bg-white/15 md:text-lg ${page === 'directory' ? 'bg-white/20' : 'hover:text-white'}`}
             >
               📋 Directory
             </button>
             {user && (
               <button
                 onClick={() => setPage('admin')}
-                className={`font-semibold transition flex items-center gap-2 ${page === 'admin' ? 'text-white' : 'text-blue-100 hover:text-white'}`}
+                className={`flex items-center gap-2 rounded-lg px-3 py-2 text-base font-bold text-white transition hover:bg-white/15 md:text-lg ${page === 'admin' ? 'bg-white/20' : 'hover:text-white'}`}
               >
                 ⚙️ Admin
               </button>
@@ -71,14 +78,14 @@ function App() {
           {user ? (
             <button
               onClick={() => setPage('profile')}
-              className={`font-semibold transition flex items-center gap-2 ${page === 'profile' ? 'text-white' : 'text-blue-100 hover:text-white'}`}
+              className={`flex items-center gap-2 rounded-lg px-3 py-2 text-base font-bold text-white transition hover:bg-white/15 md:text-lg ${page === 'profile' ? 'bg-white/20' : 'hover:text-white'}`}
             >
               👤 {user.email.split('@')[0]}
             </button>
           ) : (
             <button
               onClick={() => setPage('profile')}
-              className="bg-white text-blue-600 px-4 py-2 rounded font-medium hover:bg-blue-50 transition"
+              className="rounded-lg bg-blush-50 px-4 py-2 font-medium text-olive-800 shadow-sm hover:-translate-y-0.5 hover:bg-white hover:shadow-md"
             >
               Sign In
             </button>
