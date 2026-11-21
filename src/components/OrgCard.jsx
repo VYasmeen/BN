@@ -130,7 +130,7 @@ export default function OrgCard({ org }) {
 
       {/* Footer */}
       {org.verified && (
-        <p className="text-xs text-gray-400 mt-3">
+        <p className="mt-3 text-xs text-gray-600">
           ✓ Verified by community
         </p>
       )}

@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import HelplineBar from '../components/HelplineBar'
 import OrgCard from '../components/OrgCard'
 import { mockOrganisations } from '../data/mockOrganisations'
+import { filterOrganisations } from '../lib/searchOrganisations'
 
 const REGIONS = [
   { value: 'worldwide', label: '🌍 Worldwide' },
@@ -57,44 +58,12 @@ export default function Search() {
     languages: []
   })
 
-  const filteredOrgs = useMemo(() => {
-    return mockOrganisations.filter(org => {
-      // Text search
-      if (searchText && !org.name.toLowerCase().includes(searchText.toLowerCase()) &&
-          !org.short_desc.toLowerCase().includes(searchText.toLowerCase())) {
-        return false
-      }
-
-      // Region filter
-      if (filters.regions.length > 0 && !filters.regions.includes(org.region)) {
-        return false
-      }
-
-      // Type filter
-      if (filters.types.length > 0 && !filters.types.includes(org.type)) {
-        return false
-      }
-
-      // Cost type filter
-      if (filters.costTypes.length > 0 && !filters.costTypes.includes(org.cost_type)) {
-        return false
-      }
-
-      // Modality filter
-      if (filters.modalities.length > 0) {
-        const hasModality = filters.modalities.some(m => org.modalities?.includes(m))
-        if (!hasModality) return false
-      }
-
-      // Language filter
-      if (filters.languages.length > 0) {
-        const hasLanguage = filters.languages.some(l => org.languages?.includes(l))
-        if (!hasLanguage) return false
-      }
-
-      return true
-    })
-  }, [searchText, filters])
+  const filteredOrgs = useMemo(
+    () => filterOrganisations(mockOrganisations, searchText, filters),
+    [searchText, filters]
+  )
+  const hasActiveFilters =
+    searchText !== '' || Object.values(filters).some(values => values.length > 0)
 
   const toggleFilter = (filterType, value) => {
     setFilters(prev => ({
@@ -139,7 +108,7 @@ export default function Search() {
         <div className="bg-white p-6 rounded-lg shadow mb-8">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Filters</h2>
-            {(filters.regions.length > 0 || filters.types.length > 0 || filters.modalities.length > 0 || filters.costTypes.length > 0 || filters.languages.length > 0) && (
+            {hasActiveFilters && (
               <button
                 onClick={clearFilters}
                 className="text-olive-700 hover:text-olive-900 text-sm font-medium"
